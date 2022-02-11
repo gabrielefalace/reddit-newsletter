@@ -1,0 +1,6 @@
+server:
+  port: 8283
+reddit:
+  app:
+    id:
+  limit: 3

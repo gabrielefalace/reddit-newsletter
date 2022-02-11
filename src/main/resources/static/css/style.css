@@ -1,0 +1,32 @@
+h1 {
+    font-family: 'Manrope';
+    font-size: 38px;
+}
+
+.topic-title {
+    margin-top: 30px;
+    font-family: 'Manrope';
+    font-size: 30px;
+    color: #428ace;
+}
+
+img {
+    width: 35%;
+    float: left;
+    margin: 20px;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    color: darkslategrey;
+    font-size: 20px;
+}
+
+.card {
+    font-family: 'Manrope', sans-serif;
+    padding: 20px;
+    margin: 20px;
+    border: 0.1rem solid #d1d1d1;
+    border-radius: 25px;
+    background-color: #FCFCFC;
+}
