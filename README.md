@@ -1,4 +1,4 @@
-# Reddit Notifier
+# Reddit Newsletter
 
 ## How to build 
 
