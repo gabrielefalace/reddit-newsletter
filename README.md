@@ -14,6 +14,7 @@ A rough sketch of the architecture / use cases.
 * An MVC controller allows fetching the reddit posts based on the channels from a given user.
 
 
+
 ## How to build 
 
 Building with `mvn clean install` will also run tests, which use TestContainers: please have docker running or use `-DskipTests`.
@@ -27,7 +28,7 @@ Building with `mvn clean install` will also run tests, which use TestContainers:
    *  **Containers:** follow the [official instructions here](https://www.mongodb.com/compatibility/docker).
 
 
-2. Make sure to start the app providing a value for the property `reddit.app.id` either by passing it via arguments `-Dreddit.app.id={value}` or by placing the value in the property file. You can use the start functionality from the IDE or `mvn spring-boot:run` from the command line.
+2. Preferably start the app providing a value for the property `reddit.app.id` either by passing it via arguments `-Dreddit.app.id={value}` or by placing the value in the property file. You can use the start functionality from the IDE or `mvn spring-boot:run` from the command line.
 
 ## How to use it
 
@@ -61,4 +62,3 @@ Building with `mvn clean install` will also run tests, which use TestContainers:
    
    curl -X DELETE http://localhost:8182/user/6202722e7681d63229944915/
    ```
- 
