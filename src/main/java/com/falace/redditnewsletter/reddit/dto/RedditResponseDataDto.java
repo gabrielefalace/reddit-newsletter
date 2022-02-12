@@ -8,7 +8,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class RedditResponseData {
+public class RedditResponseDataDto {
+
     @JsonProperty("children")
-    private List<RedditPost> posts;
+    private List<RedditPostDto> posts;
+
 }

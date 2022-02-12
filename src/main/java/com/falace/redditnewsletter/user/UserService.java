@@ -29,6 +29,7 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
     }
 
+    // TODO Exception from DB must be handled
     public String createUser(UserDto userDto) {
         User u = new User(userDto.getName(), userDto.getEmail(), userDto.getFavorites());
         userRepository.insert(u);
@@ -60,7 +61,7 @@ public class UserService {
         updateFavoriteChannels(userId, ADD, channels);
     }
 
-    public void deleteRedditChannel(String userId, Set<String> channels) {
+    public void deleteRedditChannels(String userId, Set<String> channels) {
         updateFavoriteChannels(userId, REMOVE, channels);
     }
 

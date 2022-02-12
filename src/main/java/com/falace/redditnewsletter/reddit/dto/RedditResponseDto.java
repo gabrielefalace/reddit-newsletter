@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class RedditResponseDto {
 
     @JsonProperty("data")
-    private RedditResponseData data;
+    private RedditResponseDataDto data;
 
     @JsonProperty("kind")
     private String kind;

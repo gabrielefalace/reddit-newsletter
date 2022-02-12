@@ -1,6 +1,6 @@
 package com.falace.redditnewsletter.newsletter;
 
-import com.falace.redditnewsletter.reddit.dto.RedditPostData;
+import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
 import com.falace.redditnewsletter.reddit.RedditService;
 import com.falace.redditnewsletter.user.User;
 import com.falace.redditnewsletter.user.UserService;
@@ -28,11 +28,14 @@ public class NewsletterController {
 
     @GetMapping(value = {"/user/{userId}/newsletter/"})
     public String index(Model model, @PathVariable String userId) {
-        User u = userService.getUser(userId);
+        User u;
+        try{
+            u = userService.getUser(userId);
+        } catch (IllegalArgumentException iae) {
+            return "error";
+        }
         model.addAttribute("userName", u.getName());
-
-        Map<String, List<RedditPostData>> postsByTopic = redditService.fetchAllRedditPosts(u.getFavoriteRedditChannels());
-
+        Map<String, List<RedditPostDataDto>> postsByTopic = redditService.fetchAllRedditPosts(u.getFavoriteRedditChannels());
         model.addAttribute("topics", postsByTopic);
         return "index";
     }

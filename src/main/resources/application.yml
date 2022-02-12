@@ -1,6 +1,9 @@
 server:
-  port: 8283
+  port: 8182
+  error:
+    whitelabel:
+      enabled: false
 reddit:
   app:
     id:
-  limit: 3
+  numberOfPosts: 3

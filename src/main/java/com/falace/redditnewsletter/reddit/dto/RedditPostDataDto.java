@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class RedditPostData {
+public class RedditPostDataDto {
 
     @JsonProperty("title")
     private String title;

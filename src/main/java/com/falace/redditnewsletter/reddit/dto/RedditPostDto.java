@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class RedditPost {
+public class RedditPostDto {
 
     @JsonProperty("data")
-    private RedditPostData data;
+    private RedditPostDataDto data;
 
 }

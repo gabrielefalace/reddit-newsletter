@@ -1,6 +1,6 @@
 package com.falace.redditnewsletter.user;
 
-import com.falace.redditnewsletter.reddit.dto.RedditPostData;
+import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
 import com.falace.redditnewsletter.reddit.RedditService;
 import com.falace.redditnewsletter.user.dto.UserDto;
 import com.falace.redditnewsletter.user.dto.UserFavoritesDto;
@@ -44,13 +44,13 @@ public class UserController {
     @PutMapping("/user/{userId}/favorites")
     public void updateFavoriteRedditChannels(@PathVariable String userId, @RequestBody UserFavoritesDto redditChannels) {
         userService.addRedditChannels(userId, redditChannels.getChannelsToAdd());
-        userService.deleteRedditChannel(userId, redditChannels.getChannelsToDelete());
+        userService.deleteRedditChannels(userId, redditChannels.getChannelsToDelete());
     }
 
     @GetMapping("/user/{userId}/favorites")
-    public Map<String, List<RedditPostData>> getPostsFromFavoriteChannels(@PathVariable String userId) {
+    public Map<String, List<RedditPostDataDto>> getPostsFromFavoriteChannels(@PathVariable String userId) {
         User user = userService.getUser(userId);
-        Map<String, List<RedditPostData>> postsByChannel = new LinkedHashMap<>();
+        Map<String, List<RedditPostDataDto>> postsByChannel = new LinkedHashMap<>();
         user.getFavoriteRedditChannels().forEach(
                 channel -> {
                     postsByChannel.put(channel, redditService.fetchRedditPosts(channel));

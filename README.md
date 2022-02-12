@@ -1,4 +1,18 @@
-# Reddit Notifier
+# Reddit Newsletter
+
+## Overview
+
+The system allows the creation of a newsletter for registered users, so they can see the top 3 posts of 
+their favorite reddit channels.
+
+I implemented that in Spring Boot, using MongoDB to store users and Thymeleaf to render the newsletter. 
+
+A rough sketch of the architecture / use cases.
+
+![Architecture](reddit-newsletter.jpeg)
+* A REST controller allows CRUD manipulation of Users.
+* An MVC controller allows fetching the reddit posts based on the channels from a given user.
+
 
 ## How to build 
 
@@ -24,22 +38,24 @@ Building with `mvn clean install` will also run tests, which use TestContainers:
    Take note of the returned `userId` (something in a format similar to `6202722e7681d63229944915`), to be used to fetch the newsletter (next step).
    
 
-2. point the browser to `http://localhost:8182/user/{userId}/newsletter/` replacing the placeholder `{userId}` with the actual value.
+2. To fetch a user's newsletter, point the browser to `http://localhost:8182/user/{userId}/newsletter/` replacing the placeholder `{userId}` with the actual value.
 
 
 3. To try the functionality, you can change the subreddits with 
     ```
-    curl -X PATCH -H "Content-Type: application/json" http://localhost:8182/user/6202722e7681d63229944915/favorites/ -d '{"addSet": ["funny", "technology"], "deleteSet": ["python"]}'
-    ```
+   curl -X PUT -H "Content-Type: application/json" http://localhost:8182/user/6202722e7681d63229944915/favorites/ -d '{"channelsToDelete": ["bowling"], "channelsToAdd": ["flowers", "beer"]}'
+   ```
    and refresh the browser to see the changes.
+   
+   **Implementation note:** I decided to pass a Dto with the 2 sets (`channelsToAdd` and `channelsToDelete`), so to avoid both duplicated code, and the need for repeated calls in case of richer updates.
+   
+   Moreover: 
+   * the operation is idempotent because the underlying structures are sets.
+   * there's no race conditions issues, because it's a single update on a single document (which is atomic in MongoDB).
 
 ## Misc
 
-1. A rough sketch of the architecture / use cases.
-   ![Architecture](reddit-newsletter.jpeg)
-
-
-2. You can `GET` and `DELETE` users too, by Id. Examples:
+   Examples of how to also  `GET` and `DELETE` users:
    ```
    curl -X GET  http://localhost:8182/user/6202722e7681d63229944915/
    
