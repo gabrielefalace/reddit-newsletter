@@ -11,7 +11,7 @@ A rough sketch of the architecture / use cases.
 
 ![Architecture](reddit-newsletter.jpeg)
 * A REST controller allows CRUD manipulation of Users.
-* An MVC controller allows fetching the reddit posts based on the channels from a given user.
+* An MVC controller allows fetching the reddit posts based on the favorite channels of the user.
 
 
 
@@ -34,17 +34,17 @@ Building with `mvn clean install` will also run tests, which use TestContainers:
 
 1. Insert one or more users with cURL, like this (can actually copy-paste and execute the following).
    ```
-   curl -X POST -H "Content-Type: application/json" -d '{"name":"Homer", "email":"homer.simpson@mail.com", "favorites":["bowling"]}' http://localhost:8182/user/
+   curl -X POST -H "Content-Type: application/json" -d '{"name":"Homer", "email":"homer.simpson@mail.com", "favorites":["bowling"]}' http://localhost:8182/user
    ```
    Take note of the returned `userId` (something in a format similar to `6202722e7681d63229944915`), to be used to fetch the newsletter (next step).
    
 
-2. To fetch a user's newsletter, point the browser to `http://localhost:8182/user/{userId}/newsletter/` replacing the placeholder `{userId}` with the actual value.
+2. To fetch a user's newsletter, point the browser to `http://localhost:8182/user/{userId}/newsletter` replacing the placeholder `{userId}` with the actual value.
 
 
 3. To try the functionality, you can change the subreddits with 
     ```
-   curl -X PUT -H "Content-Type: application/json" http://localhost:8182/user/6202722e7681d63229944915/favorites/ -d '{"channelsToDelete": ["bowling"], "channelsToAdd": ["flowers", "beer"]}'
+   curl -X PUT -H "Content-Type: application/json" http://localhost:8182/user/6202722e7681d63229944915/favorites -d '{"channelsToDelete": ["bowling"], "channelsToAdd": ["flowers", "beer"]}'
    ```
    and refresh the browser to see the changes.
    
@@ -58,7 +58,7 @@ Building with `mvn clean install` will also run tests, which use TestContainers:
 
    Examples of how to also  `GET` and `DELETE` users:
    ```
-   curl -X GET  http://localhost:8182/user/6202722e7681d63229944915/
+   curl -X GET  http://localhost:8182/user/6202722e7681d63229944915
    
-   curl -X DELETE http://localhost:8182/user/6202722e7681d63229944915/
+   curl -X DELETE http://localhost:8182/user/6202722e7681d63229944915
    ```

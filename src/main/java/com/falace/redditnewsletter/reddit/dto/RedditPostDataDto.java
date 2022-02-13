@@ -14,8 +14,8 @@ public class RedditPostDataDto {
     @JsonProperty("score")
     private int votes;
 
-    @JsonProperty("url")
-    private String url;
+    @JsonProperty("permalink")
+    private String permalink;
 
     @JsonProperty("thumbnail")
     private String thumbnail;

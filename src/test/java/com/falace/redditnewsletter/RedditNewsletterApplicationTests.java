@@ -1,6 +1,7 @@
 package com.falace.redditnewsletter;
 
-import com.falace.redditnewsletter.user.*;
+import com.falace.redditnewsletter.user.User;
+import com.falace.redditnewsletter.user.UserRepository;
 import com.falace.redditnewsletter.user.dto.UserDto;
 import com.falace.redditnewsletter.user.dto.UserFavoritesDto;
 import org.junit.jupiter.api.AfterEach;
@@ -77,7 +78,7 @@ class RedditNewsletterApplicationTests {
         userRepo.insert(testUser);
 
         UserFavoritesDto favoritesDto = new UserFavoritesDto(Set.of("bowling"), Set.of("donuts"));
-        restTemplate.put(userEndpoint + "/" + testUser.getId() + "/favorites/", favoritesDto);
+        restTemplate.put(userEndpoint + "/" + testUser.getId() + "/favorites", favoritesDto);
 
         Optional<User> maybeFetchedUser = userRepo.findById(testUser.getId());
         assertTrue(maybeFetchedUser.isPresent());

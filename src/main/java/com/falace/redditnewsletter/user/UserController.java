@@ -1,7 +1,7 @@
 package com.falace.redditnewsletter.user;
 
-import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
 import com.falace.redditnewsletter.reddit.RedditService;
+import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
 import com.falace.redditnewsletter.user.dto.UserDto;
 import com.falace.redditnewsletter.user.dto.UserFavoritesDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +40,10 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    //TODO improve: technically is more of a PATCH. Solving support issues was taking time.
+    //TODO improve: semantically is more of a PATCH. Solving client support issues was taking time.
     @PutMapping("/user/{userId}/favorites")
     public void updateFavoriteRedditChannels(@PathVariable String userId, @RequestBody UserFavoritesDto redditChannels) {
-        userService.addRedditChannels(userId, redditChannels.getChannelsToAdd());
-        userService.deleteRedditChannels(userId, redditChannels.getChannelsToDelete());
+        userService.updateFavoriteChannels(userId, redditChannels.getChannelsToDelete(), redditChannels.getChannelsToAdd());
     }
 
     @GetMapping("/user/{userId}/favorites")

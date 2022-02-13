@@ -1,7 +1,7 @@
 package com.falace.redditnewsletter.newsletter;
 
-import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
 import com.falace.redditnewsletter.reddit.RedditService;
+import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
 import com.falace.redditnewsletter.user.User;
 import com.falace.redditnewsletter.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class NewsletterController {
         this.redditService = redditService;
     }
 
-    @GetMapping(value = {"/user/{userId}/newsletter/"})
+    @GetMapping(value = {"/user/{userId}/newsletter"})
     public String index(Model model, @PathVariable String userId) {
         User u;
         try{

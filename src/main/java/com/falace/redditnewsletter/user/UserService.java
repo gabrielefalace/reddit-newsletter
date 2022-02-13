@@ -4,19 +4,12 @@ import com.falace.redditnewsletter.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.falace.redditnewsletter.user.UserService.UserFavoritesChange.ADD;
-import static com.falace.redditnewsletter.user.UserService.UserFavoritesChange.REMOVE;
-
 @Service
 public class UserService {
-
-    enum UserFavoritesChange {
-        ADD,
-        REMOVE
-    }
 
     private final UserRepository userRepository;
 
@@ -29,7 +22,6 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
     }
 
-    // TODO Exception from DB must be handled
     public String createUser(UserDto userDto) {
         User u = new User(userDto.getName(), userDto.getEmail(), userDto.getFavorites());
         userRepository.insert(u);
@@ -40,30 +32,23 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    private void updateFavoriteChannels(String userId, UserFavoritesChange change, Set<String> channelNames) {
+    public void updateFavoriteChannels(String userId, Set<String> channelsToDelete, Set<String> channelsToAdd) {
+        if (!isIntersectionEmpty(channelsToAdd, channelsToDelete)) {
+            throw new IllegalArgumentException("You can't both add and delete a same channel!");
+        }
         Optional<User> maybeUser = userRepository.findById(userId);
         if (maybeUser.isEmpty()) {
             throw new IllegalArgumentException("Could not find user with id=" + userId);
         }
         User user = maybeUser.get();
-        switch (change) {
-            case ADD:
-                user.getFavoriteRedditChannels().addAll(channelNames);
-                break;
-            case REMOVE:
-                user.getFavoriteRedditChannels().removeAll(channelNames);
-                break;
-        }
+        user.getFavoriteRedditChannels().removeAll(channelsToDelete);
+        user.getFavoriteRedditChannels().addAll(channelsToAdd);
         userRepository.save(user);
     }
 
-    public void addRedditChannels(String userId, Set<String> channels) {
-        updateFavoriteChannels(userId, ADD, channels);
+    private <T> boolean isIntersectionEmpty(Set<T> aSet, Set<T> anotherSet) {
+        Set<T> common = new HashSet<>(aSet);
+        common.retainAll(anotherSet);
+        return common.isEmpty();
     }
-
-    public void deleteRedditChannels(String userId, Set<String> channels) {
-        updateFavoriteChannels(userId, REMOVE, channels);
-    }
-
-
 }

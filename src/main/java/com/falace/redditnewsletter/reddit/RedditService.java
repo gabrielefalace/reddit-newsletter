@@ -1,7 +1,7 @@
 package com.falace.redditnewsletter.reddit;
 
-import com.falace.redditnewsletter.reddit.dto.RedditPostDto;
 import com.falace.redditnewsletter.reddit.dto.RedditPostDataDto;
+import com.falace.redditnewsletter.reddit.dto.RedditPostDto;
 import com.falace.redditnewsletter.reddit.dto.RedditResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -56,12 +56,17 @@ public class RedditService {
                 RedditResponseDto.class);
 
         if (response.getBody() != null) {
-            return response.getBody().getData().getPosts().stream().map(RedditPostDto::getData).collect(Collectors.toList());
+            List<RedditPostDataDto> posts = response.getBody().getData().getPosts().stream().map(RedditPostDto::getData).collect(Collectors.toList());
+            for (RedditPostDataDto post : posts) {
+                post.setPermalink("https://www.reddit.com" + post.getPermalink());
+            }
+            return posts;
         } else {
             throw new IllegalStateException("Cannot get posts from reddit for channel: " + channel);
         }
     }
 
+    /*
     public int getNumberOfPosts() {
         return numberOfPosts;
     }
@@ -77,4 +82,6 @@ public class RedditService {
     public void setRedditAppId(String redditAppId) {
         this.redditAppId = redditAppId;
     }
+
+     */
 }

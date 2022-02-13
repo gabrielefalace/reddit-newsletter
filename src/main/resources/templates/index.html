@@ -40,7 +40,7 @@
                 <div th:text="${post.title}"/>
                 <div><img th:src="@{|${post.thumbnail}|}"/></div>
                 <div style="clear: left;">&#11014; Votes: <span th:text="${post.votes}"/></div>
-                <div>&#128279; <a th:text="link" th:href="@{|${post.url}|}"/></div>
+                <div>&#128279; <a th:text="link" th:href="@{|${post.permalink}|}"/></div>
             </div>
             <div class="pure-u-1-5 pure-u-md-1-3"></div>
         </div>
