@@ -2,7 +2,7 @@
 
 ## Overview
 
-The system allows the creation of a newsletter for registered users, so they can see the top 3 posts of 
+The system allows the creation of a web-based newsletter for registered users, so they can see the top 3 posts of 
 their favorite reddit channels.
 
 I implemented that in Spring Boot, using MongoDB to store users and Thymeleaf to render the newsletter. 
